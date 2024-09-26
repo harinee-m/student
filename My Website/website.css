@@ -1,0 +1,27 @@
+body{
+    background-color: rgb(164, 229, 249);
+}
+.header{
+    background-color: rgb(2, 2, 2);
+}
+.navbar{
+    position:absolute;
+    top:28px;
+    left:900px;
+}
+.navbar a{
+    color:black;
+    text-decoration: none;
+    position:relative;
+    margin:20px;
+    font-size: 20px;
+    font-family: fantasy;
+    font-weight:500px;
+}
+h1{
+    position:relative;
+}
+.navbar a:hover{
+    color:blue;
+    background-color: aquamarine;
+}
