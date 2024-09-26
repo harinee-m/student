@@ -1,0 +1,121 @@
+.first{
+    height: 500px;
+    background-image:url('img.1.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navbar{
+    height:100px;
+}
+
+.first .navbar{
+    position:absolute;
+    width:60%;
+    left:200px;
+    width:64%;
+    height:90px; 
+
+
+}
+.navbar a{
+    color:black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.navbar a:hover{
+    background-color:#fff;
+    cursor:pointer;
+}
+.middle-text{
+    text-align:center;
+    color:#000;
+}
+
+.firstnav a{
+    position:relative;
+    left:150px;
+    top:45px;
+}
+
+.secondnav a{
+    position:relative;
+    left:500px;
+    bottom:49px;
+}
+
+.text {
+    position:absolute;
+    top:165px;
+    border:2px solid #000;
+}
+.sec1text{
+    text-align: center;
+    position: relative;
+    top:189px;
+    color:#fff;
+    font-size:47px;
+}
+
+.second{
+    height: 80px;
+    background-color: #000;
+}
+
+.second-span{
+    color:#fff;
+    font-size: 18px;
+    padding: 20px 13px;
+    margin: 50px 100px;
+    position:relative;
+    top:33px;
+}
+
+.three{
+    bottom:20px;
+    text-align: center;
+}
+
+.fifth{
+    height:450px;
+    background-color:purple;
+    left:25%;
+    border: 2px solid #000;
+
+}
+
+.fifth .box{
+    width:500px;
+    height:450px;
+    background-color: aqua;
+    border: 2px solid #000;
+    position: relative;
+    left:20px;
+}
+
+#one{
+    position: absolute;
+    left:25%;
+    background-color:mediumorchid;
+}
+
+#two{
+    position: absolute;
+    left:50%;
+    background-color:violet;
+}
+
+#three{
+    position: absolute;
+    left:75%;
+    background-color:rgb(245, 213, 255);
+}
+
+#four{
+    position: absolute;
+    left:100%;
+    background-color:paleturquoise;
+}
