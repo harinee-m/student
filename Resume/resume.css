@@ -1,0 +1,28 @@
+
+form{
+border: 2px solid black;
+width: 700px;
+height: 1500px;
+margin-left: 200px;
+background-color:#ffb2ff;
+}
+.image{
+width: 100px;
+height: 100px;
+border: 1px double black;
+margin-left: 10px;
+margin-top: 10px;
+background-image: linear-gradient(rgb(108, 73, 204),rgb(241, 128, 245));
+}
+.navbar{
+width: 550px;
+height: 99px;
+border: 2px solid black;
+flex-wrap: wrap;
+margin-left: 135px;
+margin-top: -100px;
+text-align: center;
+}
+li,label,input,table,l,h3{
+    margin-left:20px;
+}
