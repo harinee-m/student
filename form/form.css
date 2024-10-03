@@ -1,0 +1,27 @@
+
+*{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    font-weight: 100px;
+    }
+    form{
+    background-color: rgb(0, 75, 119);
+    }
+    label{
+    text-align: center;
+    margin-left: -100px;
+    }
+    input{
+    text-align: center;
+    background-color: white;
+    color: rgb(126,121,121);
+    border-left: 10px;
+    }
+    #a{
+    border: 3px solid rgb(8, 8, 8);
+    height: fit-content;
+    margin-left: 500px;
+    margin-right: 500px;
+    }
+   
+    
