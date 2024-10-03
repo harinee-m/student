@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorful World</title>
+    <style>
+    body{
+      text-align: center;
+      padding:10px;
+    }
+
+   .clr{
+      padding:15px 40px;
+      margin:5px;
+      border:none;
+      border-radius:5px;
+      cursor:pointer;
+    }
+    </style>
+</head>
+<body>
+<h1>Colourful World</h1>
+<button class="clr" id="b1">coral</button>
+<button class="clr" id="b2">teal</button>
+<button class="clr" id="b3">lavender</button>
+<button class="clr" id="b4">olive</button>
+<button class="clr" id="b5">salmon</button>
+<script> 
+    function changeBackgroundColor(color){
+      document.body.style.backgroundColor = color;
+   }
+ 
+    document.getElementById('b1').addEventListener('click',function(){
+     changeBackgroundColor('coral');
+    });
+    document.getElementById('b2').addEventListener('click',function(){
+     changeBackgroundColor('teal');
+    });
+    document.getElementById('b3').addEventListener('click',function(){
+     changeBackgroundColor('lavender');
+    });
+    document.getElementById('b4').addEventListener('click',function(){
+     changeBackgroundColor('olive');
+    });
+    document.getElementById('b5').addEventListener('click',function(){
+     changeBackgroundColor('salmon');
+    });
+
+</script>
+</body>
+</html>
