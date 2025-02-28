@@ -1,0 +1,70 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family:'Times New Roman', Times, serif;
+}
+body{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eef1f6;
+    background-image: url('stop\ watch.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+.container{
+    width: 100%;
+    max-width: 800px;
+    padding: 70px;
+    border-radius: 10px;
+    color: #fff;
+    background-color: #4c6899;
+    box-shadow: 0 10px 10px rgba(0, 0, 0,0.2);
+
+}
+#display{
+    font-size: 70px;
+    
+}
+h1{
+    font-size: 60px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+   
+}
+.wrapper{
+    background: rgba(255,255,255,0.15);
+    padding:100px 100px ;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+}
+#controls button{
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 30px;
+    width: 70px;
+   margin-left: 30px;
+    font-size: 25px;
+}
+#startBtn{
+    background-color:rgba(255, 255, 255, 0.281); ;
+}
+#startBtn:hover{
+    background-color:rgba(255, 255, 255, 0.729); ;
+}
+#stopBtn{
+    background-color:rgba(255, 255, 255, 0.281); ;
+}
+#stopBtn:hover{
+    background-color:rgba(255, 255, 255, 0.729); ;
+}
+#resetBtn{
+    background-color:rgba(255, 255, 255, 0.281); ;
+}
+#resetBtn:hover{
+    background-color:rgba(255, 255, 255, 0.729); ;
+}
