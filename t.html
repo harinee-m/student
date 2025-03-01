@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourism</title>
+    <style>
+        .navbar ul li {
+            margin-left: 470px;
+            margin-top: -60px;
+            list-style: none;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            font-size: 20px;
+            padding-left: 60px;
+            color: rgb(255, 255, 255);
+            margin-left: 45px;
+        }
+
+        .navbar a:hover {
+            color: powderblue;
+        }
+
+        h2 {
+            color: white;
+            padding: 20px;
+        }
+
+        .background-clips {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        @media (min-aspect-ratio: 16/9) {
+            .background-clips {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        @media (max-aspect-ratio: 16/9) {
+            .background-clips {
+                width: auto;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <h2>Tourism</h2>
+        <ul>
+            <li>
+                <a href="home.html">Home</a>
+                <a href="destination.html">Destination</a>
+                <a href="virtual.html">Virtual tour</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="register.html">Register</a>
+            </li>
+        </ul>
+    </div>
+    <video autoplay loop muted plays-inline class="background-clips">
+        <source src="Green Leaves Background Watercolor Presentation.mp4" type="video/mp4">
+    </video>
+</body>
+
+</html>
