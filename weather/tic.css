@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+body{
+    background-image: url('stop\ clock.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+h1{
+    font-size: 40pt;
+    color: rgb(2, 2, 2);
+    font-family: 'Permanent Marker', cursive;
+    
+}
+h2{
+    font-size: 26pt;
+    font-family: 'Permanent Marker', cursive;
+}
+table#board td{
+
+    background-color: rgb(39, 28, 28);
+
+    height: 130px;
+    width: 130px;
+    margin: 19px;
+    text-align: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 60pt;
+    text-shadow: 5px 4px 6px rgb(172, 4, 74);
+    color: rgb(223, 200, 223);
+    border-radius: 15px;
+}
+
+button#btn{
+    padding: 8px 19px;
+    background: rgb(2,0,36);
+    background-color:black;
+    font-size: 15pt;
+    color: silver;
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
