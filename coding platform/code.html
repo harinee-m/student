@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Coding Roadmap</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --college-blue: #003366;
+            --light-blue: #4da6ff;
+            --bright-blue: #0077cc;
+            --white: #ffffff;
+            --light-gray: #f5f8fa;
+            --medium-gray: #e1e5e8;
+            --dark-gray: #333333;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--college-blue), #004080);
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--college-blue);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(0, 119, 204, 0.1);
+        }
+        
+        .section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            color: var(--college-blue);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--bright-blue);
+        }
+        
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .language-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .language-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--light-blue);
+        }
+        
+        .language-icon {
+            font-size: 3rem;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        /* Language-specific colors */
+        .python { color: #3776ab; background-color: #f0f8ff; }
+        .java { color: #007396; background-color: #f5f5f5; }
+        .javascript { color: #f7df1e; background-color: #f0f0f0; }
+        .c { color: #555555; background-color: #f0f0f0; }
+        .cpp { color: #00599c; background-color: #f0f8ff; }
+        .sql { color: #00758f; background-color: #f0f9ff; }
+        .ruby { color: #cc342d; background-color: #fff0f0; }
+        .php { color: #777bb4; background-color: #f0f0ff; }
+        
+        .language-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .language-name {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--college-blue);
+        }
+        
+        .roadmap-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-gray);
+        }
+        
+        .roadmap-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .roadmap-title {
+            color: var(--college-blue);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .roadmap-steps {
+            background-color: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .roadmap-step {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .roadmap-step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .step-title {
+            font-weight: bold;
+            color: var(--college-blue);
+            margin-bottom: 0.5rem;
+        }
+        
+        .platforms-grid, .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .platform-card, .resource-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--bright-blue);
+            transition: transform 0.3s;
+        }
+        
+        .platform-card:hover, .resource-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .platform-name, .resource-name {
+            color: var(--college-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .platform-desc, .resource-desc {
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+        
+        .platform-features {
+            margin: 1rem 0;
+        }
+        
+        .platform-feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+        }
+        
+        .feature-icon {
+            color: var(--bright-blue);
+            margin-right: 0.5rem;
+            margin-top: 0.2rem;
+        }
+        
+        .platform-link, .resource-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--bright-blue);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+        
+        .platform-link:hover, .resource-link:hover {
+            background-color: var(--college-blue);
+        }
+        
+        footer {
+            background-color: var(--college-blue);
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .modal-content {
+                margin: 1rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Students Coding Roadmap</h1>
+            <p class="subtitle">Master programming with our structured learning paths</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container nav-container">
+            <ul class="nav-links">
+                <li><a href="#languages">Languages</a></li>
+                <li><a href="#platforms">Practice</a></li>
+                <li><a href="#resources">Resources</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <section id="languages" class="section">
+            <h2 class="section-title">Programming Languages</h2>
+            <div class="languages-grid">
+                <!-- Python Card -->
+                <div class="language-card" onclick="showRoadmap('python')">
+                    <div class="language-icon python">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <div class="language-content">
+                        <h3 class="language-name">Python</h3>
+                        <p>Beginner-friendly language for web development, data science, and automation.</p>
+                    </div>
+                </div>
+                
+                <!-- Java Card -->
+                <div class="language-card" onclick="showRoadmap('java')">
+                    <div class="language-icon java">
+                        <i class="fab fa-java"></i>
+                    </div>
+                    <div class="language-content">
+                        <h3 class="language-name">Java</h3>
+                        <p>Object-oriented language for enterprise applications and Android development.</p>
+                    </div>
+                </div>
+                
+                <!-- JavaScript Card -->
+                <div class="language-card" onclick="showRoadmap('javascript')">
+                    <div class="language-icon javascript">
+                        <i class="fab fa-js-square"></i>
+                    </div>
+                    <div class="language-content">
+                        <h3 class="language-name">JavaScript</h3>
+                        <p>The language of the web for both frontend and backend development.</p>
+                    </div>
+                </div>
+                
+                <!-- C Card -->
+                <div class="language-card" onclick="showRoadmap('c')">
+                    <div class="language-icon c">
+                        <i class="fas fa-c"></i>
+                    </div>
+                    <div class="language-content">
+                        <h3 class="language-name">C</h3>
+                        <p>Foundational language for system programming and hardware interaction.</p>
+                    </div>
+                </div>
+                
+                <!-- C++ Card -->
+                <div class="language-card" onclick="showRoadmap('cpp')">
+                    <div class="language-icon cpp">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="language-content">
+                        <h3 class="language-name">C++</h3>
+                        <p>Extension of C with OOP features, used in game development and high-performance apps.</p>
+                    </div>
+                </div>
+                
+                <!-- SQL Card -->
+                <div class="language-card" onclick="showRoadmap('sql')">
+                    <div class="language-icon sql">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="language-content">
+                        <h3 class="language-name">SQL</h3>
+                        <p>Standard language for relational database management and data manipulation.</p>
+                    </div>
+                </div>
+                
+                
+                
+             
+            </div>
+        </section>
+        
+        <!-- Python Roadmap Modal -->
+        <div id="python-roadmap" class="roadmap-modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('python-roadmap')">&times;</span>
+                <div class="roadmap-header">
+                    <h2 class="roadmap-title">Python Learning Roadmap</h2>
+                    <p>Complete path from beginner to advanced Python developer</p>
+                </div>
+                
+                <div class="roadmap-steps">
+                    <div class="roadmap-step">
+                        <h3 class="step-title">1. Python Basics</h3>
+                        <p>Syntax, variables, data types, operators, input/output</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">2. Control Flow</h3>
+                        <p>Conditionals (if-else), loops (for, while), exception handling</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">3. Functions & Modules</h3>
+                        <p>Defining functions, parameters, return values, imports, scope</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">4. Data Structures</h3>
+                        <p>Lists, tuples, dictionaries, sets, comprehensions</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">5. Object-Oriented Programming</h3>
+                        <p>Classes, objects, inheritance, polymorphism, magic methods</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">6. File Handling</h3>
+                        <p>Reading/writing files, working with paths, CSV/JSON handling</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">7. Popular Libraries</h3>
+                        <p>NumPy, Pandas, Matplotlib, Requests, BeautifulSoup</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">8. Web Development</h3>
+                        <p>Flask/Django basics, routing, templates, database integration</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">9. Data Science</h3>
+                        <p>Intro to machine learning with scikit-learn, data visualization</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="platform-link">Download Full Roadmap PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="java-roadmap" class="roadmap-modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('java-roadmap')">&times;</span>
+                <div class="roadmap-header">
+                    <h2 class="roadmap-title">Java Learning Roadmap</h2>
+                    <p>Complete path from beginner to advanced Java developer</p>
+                </div>
+                
+                <div class="roadmap-steps">
+                    <div class="roadmap-step">
+                        <h3 class="step-title">1. Java Basics</h3>
+                        <p>Syntax, variables, data types, operators, input/output</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">2. Control Flow</h3>
+                        <p>Conditionals, loops, switch statements, exception handling</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">3. Object-Oriented Programming</h3>
+                        <p>Classes, objects, inheritance, polymorphism, interfaces</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">4. Collections Framework</h3>
+                        <p>Lists, Sets, Maps, Iterators, Stream API</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">5. Exception Handling</h3>
+                        <p>Try-catch blocks, custom exceptions, exception hierarchy</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">6. File I/O</h3>
+                        <p>Reading/writing files, serialization, NIO package</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">7. Multithreading</h3>
+                        <p>Threads, synchronization, executors, concurrent collections</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">8. JDBC & Databases</h3>
+                        <p>Database connectivity, CRUD operations, connection pooling</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">9. Spring Framework</h3>
+                        <p>Dependency injection, Spring Boot, REST APIs, security</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="platform-link">Download Full Roadmap PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="javascript-roadmap" class="roadmap-modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('javascript-roadmap')">&times;</span>
+                <div class="roadmap-header">
+                    <h2 class="roadmap-title">JavaScript Learning Roadmap</h2>
+                    <p>Complete path from beginner to advanced JavaScript developer</p>
+                </div>
+                
+                <div class="roadmap-steps">
+                    <div class="roadmap-step">
+                        <h3 class="step-title">1. JavaScript Basics</h3>
+                        <p>Syntax, variables, data types, operators, functions</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">2. DOM Manipulation</h3>
+                        <p>Selecting elements, event handling, modifying content</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">3. ES6+ Features</h3>
+                        <p>Let/const, arrow functions, classes, modules, destructuring</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">4. Asynchronous JavaScript</h3>
+                        <p>Callbacks, promises, async/await, fetch API</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">5. Node.js Basics</h3>
+                        <p>NPM, modules, file system, HTTP server</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">6. Frontend Frameworks</h3>
+                        <p>React/Vue/Angular fundamentals, components, state management</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">7. Backend Development</h3>
+                        <p>Express.js, REST APIs, authentication, databases</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">8. Testing</h3>
+                        <p>Jest, Mocha, unit testing, integration testing</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">9. Deployment</h3>
+                        <p>CI/CD, Docker, cloud platforms, performance optimization</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="platform-link">Download Full Roadmap PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="c-roadmap" class="roadmap-modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('c-roadmap')">&times;</span>
+                <div class="roadmap-header">
+                    <h2 class="roadmap-title">C Programming Roadmap</h2>
+                    <p>Complete path from beginner to advanced C programmer</p>
+                </div>
+                
+                <div class="roadmap-steps">
+                    <div class="roadmap-step">
+                        <h3 class="step-title">1. C Basics</h3>
+                        <p>Syntax, variables, data types, operators, input/output</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">2. Control Flow</h3>
+                        <p>Conditionals, loops, switch statements</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">3. Functions</h3>
+                        <p>Function declaration, parameters, return values, recursion</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">4. Pointers</h3>
+                        <p>Pointer arithmetic, arrays and pointers, function pointers</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">5. Memory Management</h3>
+                        <p>malloc, calloc, realloc, free, memory leaks</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">6. Data Structures</h3>
+                        <p>Linked lists, stacks, queues, trees, graphs</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">7. File Handling</h3>
+                        <p>Reading/writing files, binary files, file pointers</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">8. System Programming</h3>
+                        <p>Processes, signals, pipes, sockets</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">9. Advanced Topics</h3>
+                        <p>Multithreading, optimization, embedded systems</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="platform-link">Download Full Roadmap PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="cpp-roadmap" class="roadmap-modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('cpp-roadmap')">&times;</span>
+                <div class="roadmap-header">
+                    <h2 class="roadmap-title">C++ Learning Roadmap</h2>
+                    <p>Complete path from beginner to advanced C++ developer</p>
+                </div>
+                
+                <div class="roadmap-steps">
+                    <div class="roadmap-step">
+                        <h3 class="step-title">1. C++ Basics</h3>
+                        <p>Syntax, variables, data types, operators, I/O streams</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">2. Control Flow</h3>
+                        <p>Conditionals, loops, switch statements</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">3. Functions</h3>
+                        <p>Function overloading, default arguments, references</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">4. Object-Oriented Programming</h3>
+                        <p>Classes, objects, inheritance, polymorphism, templates</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">5. STL (Standard Template Library)</h3>
+                        <p>Containers, algorithms, iterators, functors</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">6. Memory Management</h3>
+                        <p>new/delete, smart pointers, RAII, move semantics</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">7. File Handling</h3>
+                        <p>Reading/writing files, binary files, serialization</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">8. Multithreading</h3>
+                        <p>Threads, mutexes, condition variables, async programming</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">9. Advanced Topics</h3>
+                        <p>Design patterns, game development, performance optimization</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="platform-link">Download Full Roadmap PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="sql-roadmap" class="roadmap-modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('sql-roadmap')">&times;</span>
+                <div class="roadmap-header">
+                    <h2 class="roadmap-title">SQL Learning Roadmap</h2>
+                    <p>Complete path from beginner to advanced SQL developer</p>
+                </div>
+                
+                <div class="roadmap-steps">
+                    <div class="roadmap-step">
+                        <h3 class="step-title">1. Database Fundamentals</h3>
+                        <p>Relational model, tables, rows, columns, keys</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">2. Basic Queries</h3>
+                        <p>SELECT, INSERT, UPDATE, DELETE, WHERE clause</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">3. Joins and Subqueries</h3>
+                        <p>INNER JOIN, LEFT JOIN, RIGHT JOIN, nested queries</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">4. Aggregation</h3>
+                        <p>GROUP BY, HAVING, aggregate functions (COUNT, SUM, etc.)</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">5. Indexes and Optimization</h3>
+                        <p>Creating indexes, query optimization, execution plans</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">6. Transactions</h3>
+                        <p>ACID properties, COMMIT, ROLLBACK, isolation levels</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">7. Stored Procedures</h3>
+                        <p>Creating and calling stored procedures, functions</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">8. Database Design</h3>
+                        <p>Normalization, ER diagrams, schema design</p>
+                    </div>
+                    
+                    <div class="roadmap-step">
+                        <h3 class="step-title">9. Advanced Topics</h3>
+                        <p>Window functions, CTEs, partitioning, NoSQL basics</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="platform-link">Download Full Roadmap PDF</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- LeetCode Platform Card Example -->
+        <section id="platforms" class="section">
+            <h2 class="section-title">Practice Platforms</h2>
+            <div class="platforms-grid">
+                <div class="platform-card">
+                    <h3 class="platform-name">LeetCode</h3>
+                    <p class="platform-desc">The best platform to prepare for coding interviews with hundreds of challenges and company-specific questions.</p>
+                    
+                    <div class="platform-features">
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>1500+ coding problems</span>
+                        </div>
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Interview preparation</span>
+                        </div>
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Weekly contests</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://leetcode.com/" class="platform-link" target="_blank">Visit LeetCode</a>
+                </div>
+                
+                <div class="platform-card">
+                    <h3 class="platform-name">HackerRank</h3>
+                    <p class="platform-desc">Solve coding challenges across multiple domains and skill levels.</p>
+                    
+                    <div class="platform-features">
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Challenges</span>
+                        </div>
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Skill certification test</span>
+                        </div>
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Interview preparation kits</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://www.hackerrank.com/" class="platform-link" target="_blank">Visit HackerRank</a>
+                </div>
+                
+                <div class="platform-card">
+                    <h3 class="platform-name">Codecademy</h3>
+                    <p class="platform-desc">Interactive coding lessons with immediate feedback.</p>
+                    
+                    <div class="platform-features">
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Interactive coding lessons</span>
+                        </div>
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Project-based learning</span>
+                        </div>
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Career paths</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://www.codecademy.com/" class="platform-link" target="_blank">Visit Codecademy</a>
+                </div>
+                
+                <div class="platform-card">
+                    <h3 class="platform-name">Exercism</h3>
+                    <p class="platform-desc">Practice with mentored exercises in dozens of programming languages.</p>
+                    
+                    <div class="platform-features">
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>50+ programming languages</span>
+                        </div>
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Personalized feedback</span>
+                        </div>
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Concept exercises</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://exercism.org/" class="platform-link" target="_blank">Visit Exercism</a>
+                </div>
+                
+                <div class="platform-card">
+                    <h3 class="platform-name">Codewars</h3>
+                    <p class="platform-desc">Improve your skills by training with others on real code challenges.</p>
+                    
+                    <div class="platform-features">
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Code challenges ranked</span>
+                        </div>
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Compare solutions</span>
+                        </div>
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span> challenges</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://www.codewars.com/" class="platform-link" target="_blank">Visit Codewars</a>
+                </div>
+                
+                <div class="platform-card">
+                    <h3 class="platform-name">SQLZoo</h3>
+                    <p class="platform-desc">Interactive SQL tutorial with exercises to practice your database skills.</p>
+                    
+                    <div class="platform-features">
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Interactive SQL tutorial</span>
+                        </div>
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>real database scenarios</span>
+                        </div>
+                        <div class="platform-feature">
+                            <span class="feature-icon">✅</span>
+                            <span>Assessment tests</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://sqlzoo.net/" class="platform-link" target="_blank">Visit SQLZoo</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="resources" class="section">
+            <h2 class="section-title">Learning Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3 class="resource-name">freeCodeCamp</h3>
+                    <p class="resource-desc">Free online coding courses and certifications with hands-on projects.</p>
+                    <a href="https://www.freecodecamp.org/" class="resource-link" target="_blank">Visit freeCodeCamp</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3 class="resource-name">MDN Web Docs</h3>
+                    <p class="resource-desc">Comprehensive JavaScript and web development documentation with tutorials.</p>
+                    <a href="https://developer.mozilla.org/" class="resource-link" target="_blank">Visit MDN</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3 class="resource-name">GeeksforGeeks</h3>
+                    <p class="resource-desc">Computer science portal with articles, quizzes and practice problems.</p>
+                    <a href="https://www.geeksforgeeks.org/" class="resource-link" target="_blank">Visit GeeksforGeeks</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3 class="resource-name">W3Schools</h3>
+                    <p class="resource-desc">Beginner-friendly tutorials and references for web technologies.</p>
+                    <a href="https://www.w3schools.com/" class="resource-link" target="_blank">Visit W3Schools</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3 class="resource-name">edX</h3>
+                    <p class="resource-desc">University-level courses from top institutions worldwide.</p>
+                    <a href="https://www.edx.org/" class="resource-link" target="_blank">Visit edX</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3 class="resource-name">Coursera</h3>
+                    <p class="resource-desc">Online courses from universities and companies on various programming topics.</p>
+                    <a href="https://www.coursera.org/" class="resource-link" target="_blank">Visit Coursera</a>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 College Coding Roadmap. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showRoadmap(language) {
+            const modal = document.getElementById(`${language}-roadmap`);
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target.className === 'roadmap-modal') {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+    </script>
+</body>
+</html>
