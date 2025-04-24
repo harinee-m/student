@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Profile Roadmap</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --linkedin-dark-blue: #004182;
+            --linkedin-blue: #0077B5;
+            --linkedin-light-blue: #00A0DC;
+            --white: #FFFFFF;
+            --light-gray: #F3F6F8;
+            --medium-gray: #E1E9EE;
+            --dark-gray: #313335;
+            --text-dark: #1D2226;
+            --text-light: #666666;
+            --success-green: #028858;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--linkedin-dark-blue), var(--linkedin-blue));
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--linkedin-dark-blue);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(0, 119, 181, 0.1);
+        }
+        
+        .section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .section-title {
+            color: var(--linkedin-dark-blue);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--linkedin-light-blue);
+        }
+        
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .profile-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid var(--medium-gray);
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 119, 181, 0.15);
+            border-color: var(--linkedin-light-blue);
+        }
+        
+        .profile-icon {
+            font-size: 3rem;
+            padding: 2rem 0;
+            text-align: center;
+            background-color: var(--light-gray);
+            color: var(--linkedin-dark-blue);
+        }
+        
+        .profile-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .profile-name {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--linkedin-dark-blue);
+        }
+        
+        .checklist {
+            text-align: left;
+            margin-top: 1rem;
+        }
+        
+        .checklist-item {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 30px;
+            color: var(--text-dark);
+        }
+        
+        .checklist-item::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success-green);
+        }
+        
+        /* LinkedIn Profile View Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            margin: 2rem auto;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--white);
+            cursor: pointer;
+        }
+        
+        /* LinkedIn Profile Styles */
+        .linkedin-profile {
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        
+        .profile-header {
+            position: relative;
+            height: 200px;
+            background-color: var(--linkedin-dark-blue);
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .profile-avatar {
+            position: absolute;
+            bottom: -50px;
+            left: 30px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid var(--white);
+            background-color: var(--white);
+            object-fit: cover;
+        }
+        
+        .profile-body {
+            padding: 70px 30px 30px;
+        }
+        
+        .profile-name-large {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        
+        .profile-headline {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        
+        .profile-location {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .profile-section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--linkedin-dark-blue);
+            margin-bottom: 1rem;
+        }
+        
+        .experience-item, .education-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .experience-title, .education-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .experience-company, .education-school {
+            color: var(--linkedin-blue);
+            margin-bottom: 0.3rem;
+        }
+        
+        .experience-duration, .education-duration {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .skill-tag {
+            background-color: var(--light-gray);
+            color: var(--linkedin-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .platforms-grid, .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .platform-card, .resource-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--bright-blue);
+        }
+        
+        .platform-name, .resource-name {
+            color: var(--linkedin-blue);
+            margin-bottom: 0.5rem;
+        }
+        
+        .platform-link, .resource-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--bright-blue);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .platform-link:hover, .resource-link:hover {
+            background-color: var(--linkedin-blue);
+        }
+        
+        .pro-tip {
+            background-color: var(--light-blue);
+            border-left: 4px solid var(--linkedin-blue);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .final-profile-link {
+            display: block;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .view-complete-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--linkedin-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .view-complete-btn:hover {
+            background-color: var(--linkedin-dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        footer {
+            background-color: var(--linkedin-dark-blue);
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+                bottom: -30px;
+            }
+            
+            .profile-body {
+                padding: 50px 15px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>LinkedIn Profile Roadmap</h1>
+            <p class="subtitle">A professional guide for engineering students</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container nav-container">
+            <ul class="nav-links">
+                <li><a href="#foundation">Profile Foundation</a></li>
+                <li><a href="#content">Content Strategy</a></li>
+                <li><a href="#networking">Networking</a></li>
+                <li><a href="#resources">Resources</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <section id="foundation" class="section">
+            <h2 class="section-title">Profile Foundation</h2>
+            <div class="profile-grid">
+                <!-- Profile Picture Card -->
+                <div class="profile-card" onclick="showLinkedInProfile('profile-picture')">
+                    <div class="profile-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="profile-content">
+                        <h3 class="profile-name">Profile Picture</h3>
+                        <div class="checklist">
+                            <div class="checklist-item">Professional headshot</div>
+                            <div class="checklist-item">Good lighting and clarity</div>
+                            <div class="checklist-item">Appropriate attire</div>
+                            <div class="checklist-item">Approachable expression</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Headline Card -->
+                <div class="profile-card" onclick="showLinkedInProfile('headline')">
+                    <div class="profile-icon">
+                        <i class="fas fa-heading"></i>
+                    </div>
+                    <div class="profile-content">
+                        <h3 class="profile-name">Headline</h3>
+                        <div class="checklist">
+                            <div class="checklist-item">More than just "Student"</div>
+                            <div class="checklist-item">Include specialization</div>
+                            <div class="checklist-item">Key skills/technologies</div>
+                            <div class="checklist-item">Career aspirations</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- About Section Card -->
+                <div class="profile-card" onclick="showLinkedInProfile('about')">
+                    <div class="profile-icon">
+                        <i class="fas fa-address-card"></i>
+                    </div>
+                    <div class="profile-content">
+                        <h3 class="profile-name">About Section</h3>
+                        <div class="checklist">
+                            <div class="checklist-item">First-person narrative</div>
+                            <div class="checklist-item">Academic focus</div>
+                            <div class="checklist-item">Projects/research</div>
+                            <div class="checklist-item">Technical skills</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="content" class="section">
+            <h2 class="section-title">Content Strategy</h2>
+            <div class="profile-grid">
+                <!-- Experience Section -->
+                <div class="profile-card" onclick="showLinkedInProfile('experience')">
+                    <div class="profile-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="profile-content">
+                        <h3 class="profile-name">Experience</h3>
+                        <div class="checklist">
+                            <div class="checklist-item">Internships</div>
+                            <div class="checklist-item">Relevant jobs</div>
+                            <div class="checklist-item">Research positions</div>
+                            <div class="checklist-item">Quantified achievements</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Projects Section -->
+                <div class="profile-card" onclick="showLinkedInProfile('projects')">
+                    <div class="profile-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <div class="profile-content">
+                        <h3 class="profile-name">Projects</h3>
+                        <div class="checklist">
+                            <div class="checklist-item">Academic projects</div>
+                            <div class="checklist-item">Personal/hackathon</div>
+                            <div class="checklist-item">Technologies used</div>
+                            <div class="checklist-item">GitHub/demo links</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Skills Section -->
+                <div class="profile-card" onclick="showLinkedInProfile('skills')">
+                    <div class="profile-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="profile-content">
+                        <h3 class="profile-name">Skills</h3>
+                        <div class="checklist">
+                            <div class="checklist-item">Technical skills first</div>
+                            <div class="checklist-item">Programming languages</div>
+                            <div class="checklist-item">Frameworks/tools</div>
+                            <div class="checklist-item">Skill assessments</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="networking" class="section">
+            <h2 class="section-title">Networking Strategy</h2>
+            <div class="platforms-grid">
+                <div class="platform-card" onclick="showLinkedInProfile('networking-peers')">
+                    <h3 class="platform-name">Connect with Peers</h3>
+                    <p>Build your network with classmates, professors, and alumni from your institution.</p>
+                    <div class="checklist">
+                        <div class="checklist-item">Join your university's alumni network</div>
+                        <div class="checklist-item">Connect with classmates and professors</div>
+                        <div class="checklist-item">Personalize connection requests</div>
+                    </div>
+                </div>
+                
+                <div class="platform-card" onclick="showLinkedInProfile('networking-industry')">
+                    <h3 class="platform-name">Industry Professionals</h3>
+                    <p>Connect with professionals in your target companies and roles.</p>
+                    <div class="checklist">
+                        <div class="checklist-item">Follow companies you're interested in</div>
+                        <div class="checklist-item">Connect with recruiters in your field</div>
+                        <div class="checklist-item">Engage with their content</div>
+                    </div>
+                </div>
+                
+                <div class="platform-card" onclick="showLinkedInProfile('networking-content')">
+                    <h3 class="platform-name">Content Engagement</h3>
+                    <p>Increase visibility by engaging with relevant content.</p>
+                    <div class="checklist">
+                        <div class="checklist-item">Comment on industry posts</div>
+                        <div class="checklist-item">Share interesting articles</div>
+                        <div class="checklist-item">Post about your learning journey</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="resources" class="section">
+            <h2 class="section-title">Optimization Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card" onclick="showLinkedInProfile('resources-learning')">
+                    <h3 class="resource-name">LinkedIn Learning</h3>
+                    <p>Courses on personal branding and profile optimization (often free through universities).</p>
+                </div>
+                
+                <div class="resource-card" onclick="showLinkedInProfile('resources-checklist')">
+                    <h3 class="resource-name">LinkedIn Profile Checklist</h3>
+                    <p>Official LinkedIn guide for creating a complete profile.</p>
+                </div>
+                
+                <div class="resource-card" onclick="showLinkedInProfile('resources-resume')">
+                    <h3 class="resource-name">Resume to Profile</h3>
+                    <p>How to translate your resume effectively to your LinkedIn profile.</p>
+                </div>
+            </div>
+            
+            <div class="final-profile-link">
+                <a href="https://www.linkedin.com/" class="view-complete-btn" target="_blank">
+                    <i class="fab fa-linkedin"></i> View Complete LinkedIn Profile
+                </a>
+            </div>
+        </section>
+    </div>
+    
+    <!-- LinkedIn Profile Modal -->
+    <div id="linkedinModal" class="modal">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <div class="modal-content linkedin-profile">
+            <div class="profile-header"></div>
+            <img id="profileAvatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" class="profile-avatar">
+            <div class="profile-body">
+                <h1 id="profileName" class="profile-name-large">John Doe</h1>
+                <p id="profileHeadline" class="profile-headline">Computer Science Student | AI Enthusiast | Python Developer</p>
+                <div class="profile-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>New York, NY</span>
+                </div>
+                
+                <!-- Profile Picture Section -->
+                <div id="profile-picture-section" class="profile-section" style="display: none;">
+                    <h2 class="section-title">Profile Picture</h2>
+                    <div class="profile-picture-example">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Example Profile" style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--linkedin-blue); margin: 1rem auto; display: block;">
+                        <p><strong>Professional Example:</strong></p>
+                        <ul>
+                            <li>High-quality headshot (not a selfie)</li>
+                            <li>Professional attire (business casual)</li>
+                            <li>Neutral or office-appropriate background</li>
+                            <li>Friendly, approachable expression</li>
+                            <li>Good lighting that shows your face clearly</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Headline Section -->
+                <div id="headline-section" class="profile-section" style="display: none;">
+                    <h2 class="section-title">Headline</h2>
+                    <p><strong>Current Headline:</strong> "Student at University of Technology"</p>
+                    <p><strong>Improved Headline:</strong> "Computer Science Student | AI Enthusiast | Python Developer | Seeking Summer Internship"</p>
+                    <div class="pro-tip">
+                        <strong>Pro Tip:</strong> Include keywords recruiters might search for in your field. Mention your specialization and career goals.
+                    </div>
+                </div>
+                
+                <!-- About Section -->
+                <div id="about-section" class="profile-section" style="display: none;">
+                    <h2 class="section-title">About Section</h2>
+                    <p><strong>Example:</strong></p>
+                    <p>"Computer Science undergraduate with a passion for artificial intelligence and software development. Currently researching machine learning applications at University Tech with Professor Smith. Developed several web applications using React and Node.js, including a campus event management system adopted by the student association."</p>
+                    <p>"Key Skills: Python, JavaScript, Machine Learning, Data Structures"</p>
+                    <p>"Seeking summer internship opportunities in software engineering to apply my skills and contribute to meaningful projects."</p>
+                </div>
+                
+                <!-- Experience Section -->
+                <div id="experience-section" class="profile-section" style="display: none;">
+                    <h2 class="section-title">Experience</h2>
+                    <div class="experience-item">
+                        <h3 class="experience-title">Software Engineering Intern</h3>
+                        <p class="experience-company">Tech Solutions Inc.</p>
+                        <p class="experience-duration">Jun 2022 - Aug 2022 • 3 mos</p>
+                        <ul>
+                            <li>Developed REST APIs using Python and Flask that improved data processing efficiency by 30%</li>
+                            <li>Collaborated with cross-functional teams to implement new features for the company's flagship product</li>
+                            <li>Wrote unit tests achieving 85% code coverage</li>
+                        </ul>
+                    </div>
+                    <div class="experience-item">
+                        <h3 class="experience-title">Research Assistant</h3>
+                        <p class="experience-company">University of Technology - Computer Science Department</p>
+                        <p class="experience-duration">Jan 2022 - Present</p>
+                        <ul>
+                            <li>Assisting with machine learning research on natural language processing</li>
+                            <li>Implementing algorithms in Python using TensorFlow</li>
+                            <li>Co-author on upcoming conference paper</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Projects Section -->
+                <div id="projects-section" class="profile-section" style="display: none;">
+                    <h2 class="section-title">Projects</h2>
+                    <div class="experience-item">
+                        <h3 class="experience-title">Campus Event Management System</h3>
+                        <p class="experience-company">Personal Project</p>
+                        <p class="experience-duration">Jan 2023</p>
+                        <ul>
+                            <li>Full-stack web application built with React, Node.js, and MongoDB</li>
+                            <li>Implemented user authentication and real-time updates</li>
+                            <li>Adopted by university student association with 200+ active users</li>
+                        </ul>
+                        <p><strong>Technologies:</strong> JavaScript, React, Node.js, Express, MongoDB</p>
+                    </div>
+                </div>
+                
+                <!-- Skills Section -->
+                <div id="skills-section" class="profile-section" style="display: none;">
+                    <h2 class="section-title">Skills</h2>
+                    <div class="skills-list">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">Data Structures</span>
+                        <span class="skill-tag">Algorithms</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">TensorFlow</span>
+                    </div>
+                    <div class="pro-tip" style="margin-top: 1rem;">
+                        <strong>Pro Tip:</strong> Get endorsements from professors, colleagues, and supervisors. Take LinkedIn skill assessments to validate your skills.
+                    </div>
+                </div>
+                
+                <!-- Networking Sections -->
+                <div id="networking-peers-section" class="profile-section" style="display: none;">
+                    <h2 class="section-title">Connect with Peers</h2>
+                    <ul>
+                        <li>Search for your university's official LinkedIn page and join its alumni network</li>
+                        <li>Connect with classmates from your major and student organizations</li>
+                        <li>Follow professors and teaching assistants from your department</li>
+                        <li>Personalize connection requests with a brief note about how you know them</li>
+                        <li>Join university-affiliated groups and participate in discussions</li>
+                    </ul>
+                </div>
+                
+                <div id="networking-industry-section" class="profile-section" style="display: none;">
+                    <h2 class="section-title">Connect with Industry Professionals</h2>
+                    <ul>
+                        <li>Follow companies you're interested in working for</li>
+                        <li>Connect with recruiters from target companies (include a note about your interest)</li>
+                        <li>Find alumni from your school working at companies you admire</li>
+                        <li>Engage with their content by liking and commenting thoughtfully</li>
+                        <li>Attend virtual events hosted by companies and connect with speakers</li>
+                    </ul>
+                </div>
+                
+                <div id="networking-content-section" class="profile-section" style="display: none;">
+                    <h2 class="section-title">Content Engagement Strategy</h2>
+                    <ul>
+                        <li>Comment on industry posts with insightful perspectives</li>
+                        <li>Share articles relevant to your field with your own commentary</li>
+                        <li>Post updates about your learning journey and projects</li>
+                        <li>Celebrate milestones like course completions or project launches</li>
+                        <li>Use relevant hashtags like #ComputerScience #Programming #TechStudent</li>
+                    </ul>
+                </div>
+                
+                <!-- Resources Sections -->
+                <div id="resources-learning-section" class="profile-section" style="display: none;">
+                    <h2 class="section-title">LinkedIn Learning Resources</h2>
+                    <p>Many universities provide free access to LinkedIn Learning. Check with your school's IT department.</p>
+                    <p><strong>Recommended Courses:</strong></p>
+                    <ul>
+                        <li>Building Your Professional Brand</li>
+                        <li>Writing a Resume</li>
+                        <li>Programming Foundations: Fundamentals</li>
+                        <li>Developing Your Professional Network</li>
+                    </ul>
+                    <a href="https://www.linkedin.com/learning/" class="resource-link" target="_blank">Visit LinkedIn Learning</a>
+                </div>
+                
+                <div id="resources-checklist-section" class="profile-section" style="display: none;">
+                    <h2 class="section-title">LinkedIn Profile Checklist</h2>
+                    <p>LinkedIn's official guide to creating an all-star profile:</p>
+                    <ul>
+                        <li>Profile photo that shows your face clearly</li>
+                        <li>Headline that goes beyond your job title</li>
+                        <li>Detailed experience with accomplishments</li>
+                        <li>Education history</li>
+                        <li>Skills with at least 3 endorsements each</li>
+                        <li>At least 50 connections</li>
+                    </ul>
+                    <a href="https://www.linkedin.com/help/linkedin/answer/a1338220" class="resource-link" target="_blank">View Official Checklist</a>
+                </div>
+                
+                <div id="resources-resume-section" class="profile-section" style="display: none;">
+                    <h2 class="section-title">Translating Your Resume to LinkedIn</h2>
+                    <p>Key differences between resumes and LinkedIn profiles:</p>
+                    <ul>
+                        <li>LinkedIn allows for more narrative in the About section</li>
+                        <li>You can include all experiences, not just most recent/relevant</li>
+                        <li>Skills can be more extensive and get validated through endorsements</li>
+                        <li>Projects can have their own dedicated sections</li>
+                        <li>You can include media links and samples of your work</li>
+                    </ul>
+                    <a href="https://www.linkedin.com/help/linkedin/answer/a553390" class="resource-link" target="_blank">LinkedIn's Resume Guide</a>
+                </div>
+                
+                <!-- Complete Profile View -->
+                <div id="complete-profile-section">
+                    <!-- About Section -->
+                    <div class="profile-section">
+                        <h2 class="section-title">About</h2>
+                        <p>Computer Science undergraduate with a passion for artificial intelligence and software development. Currently researching machine learning applications at University Tech with Professor Smith. Developed several web applications using React and Node.js, including a campus event management system adopted by the student association.</p>
+                        <p>Key Skills: Python, JavaScript, Machine Learning, Data Structures</p>
+                        <p>Seeking summer internship opportunities in software engineering to apply my skills and contribute to meaningful projects.</p>
+                    </div>
+                    
+                    <!-- Experience Section -->
+                    <div class="profile-section">
+                        <h2 class="section-title">Experience</h2>
+                        <div class="experience-item">
+                            <h3 class="experience-title">Software Engineering Intern</h3>
+                            <p class="experience-company">Tech Solutions Inc.</p>
+                            <p class="experience-duration">Jun 2022 - Aug 2022 • 3 mos</p>
+                            <ul>
+                                <li>Developed REST APIs using Python and Flask that improved data processing efficiency by 30%</li>
+                                <li>Collaborated with cross-functional teams to implement new features for the company's flagship product</li>
+                                <li>Wrote unit tests achieving 85% code coverage</li>
+                            </ul>
+                        </div>
+                        <div class="experience-item">
+                            <h3 class="experience-title">Research Assistant</h3>
+                            <p class="experience-company">University of Technology - Computer Science Department</p>
+                            <p class="experience-duration">Jan 2022 - Present</p>
+                            <ul>
+                                <li>Assisting with machine learning research on natural language processing</li>
+                                <li>Implementing algorithms in Python using TensorFlow</li>
+                                <li>Co-author on upcoming conference paper</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Education Section -->
+                    <div class="profile-section">
+                        <h2 class="section-title">Education</h2>
+                        <div class="education-item">
+                            <h3 class="education-title">University of Technology</h3>
+                            <p class="education-school">Bachelor of Science in Computer Science</p>
+                            <p class="education-duration">2020 - 2024</p>
+                            <p>GPA: 3.7/4.0</p>
+                            <p>Relevant Coursework: Data Structures, Algorithms, Machine Learning, Database Systems, Web Development</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Projects Section -->
+                    <div class="profile-section">
+                        <h2 class="section-title">Projects</h2>
+                        <div class="experience-item">
+                            <h3 class="experience-title">Campus Event Management System</h3>
+                            <p class="experience-company">Personal Project</p>
+                            <p class="experience-duration">Jan 2023</p>
+                            <ul>
+                                <li>Full-stack web application built with React, Node.js, and MongoDB</li>
+                                <li>Implemented user authentication and real-time updates</li>
+                                <li>Adopted by university student association with 200+ active users</li>
+                            </ul>
+                            <p><strong>Technologies:</strong> JavaScript, React, Node.js, Express, MongoDB</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Skills Section -->
+                    <div class="profile-section">
+                        <h2 class="section-title">Skills</h2>
+                        <div class="skills-list">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">Machine Learning</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">Data Structures</span>
+                            <span class="skill-tag">Algorithms</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">TensorFlow</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 LinkedIn Profile Roadmap for Engineering Students</p>
+        </div>
+    </footer>
+
+    <script>
+        // Show LinkedIn profile modal with specific section
+        function showLinkedInProfile(section) {
+            const modal = document.getElementById('linkedinModal');
+            modal.style.display = 'block';
+            
+            // Hide all sections first
+            document.querySelectorAll('.profile-section').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.getElementById('complete-profile-section').style.display = 'none';
+            
+            // Show the requested section or complete profile
+            if (section === 'complete') {
+                document.getElementById('complete-profile-section').style.display = 'block';
+            } else {
+                const sectionElement = document.getElementById(`${section}-section`);
+                if (sectionElement) {
+                    sectionElement.style.display = 'block';
+                }
+            }
+            
+            // Highlight profile picture if that's the section being viewed
+            if (section === 'profile-picture') {
+                document.getElementById('profileAvatar').style.border = '4px solid #028858';
+            } else {
+                document.getElementById('profileAvatar').style.border = '4px solid white';
+            }
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('linkedinModal').style.display = 'none';
+        }
+        
+        // Close when clicking outside modal
+        window.onclick = function(event) {
+            const modal = document.getElementById('linkedinModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
